@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Reply Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #dddddd;
+        }
+        .header h2 {
+            color: #4CAF50;
+            margin: 0;
+        }
+        .content {
+            margin: 20px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888888;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Question Reply Notification</h2>
+        </div>
+        <div class="content">
+            <p>Hello <%= name %>,</p>
+            <p>You have received a new reply to your question in the course "<strong><%= title %></strong>".</p>
+            <p>To view the reply, please log in to your account and check the course discussion section.</p>
+            <p>Thank you for engaging with our platform!</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 Your Platform Name. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

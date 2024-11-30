@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Notification  Karan Learning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello <%= user.name %>,</h1>
+        <p>You have successfully logged into your account on <%= new Date().toDateString() %>.</p>
+        <p>If you didn't log in, please secure your account by changing your password immediately.</p>
+        <p>Thank you for using our service!</p>
+
+        <div class="footer">
+            <p>&copy; <%= year %> Learning. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
