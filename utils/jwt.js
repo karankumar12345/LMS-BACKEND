@@ -1,37 +1,40 @@
 const jwt = require('jsonwebtoken');
-
 require('dotenv').config();
 
-// For handling refresh tokens if needed (e.g., in Redis for token blacklist)
 const sendToken = async (user, statusCode, res) => {
+  // Generate access and refresh tokens
   const accessToken = user.SignAccessToken();
   const refreshToken = user.SignRefreshToken();
 
-  const accessTokenExpire = parseInt(process.env.ACCESS_TOKEN_EXPIRE || "5", 10) * 60; // Convert minutes to seconds
-  const refreshTokenExpire = parseInt(process.env.REFRESH_TOKEN_EXPIRE || "59", 10) * 60; // Convert minutes to seconds
+  // Convert expiration times from minutes to milliseconds
+  const accessTokenExpire = parseInt(process.env.ACCESS_TOKEN_EXPIRE || "5", 10) * 60 * 1000; // Default: 5 minutes
+  const refreshTokenExpire = parseInt(process.env.REFRESH_TOKEN_EXPIRE || "59", 10) * 60 * 1000; // Default: 59 minutes
 
+  // Access token cookie options
   const accessTokenOptions = {
-    expires: new Date(Date.now() + accessTokenExpire * 1000),
-    maxAge: accessTokenExpire * 1000,
-    httpOnly: true,
-    sameSite: "lax",
+    expires: new Date(Date.now() + accessTokenExpire),
+    maxAge: accessTokenExpire,
+    httpOnly: true, // Prevent JavaScript from accessing this cookie
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Use "none" for cross-origin in production
+    secure: process.env.NODE_ENV === "production", // Only send cookies over HTTPS in production
+    path: "/", // Apply the cookie to the entire site
   };
 
+  // Refresh token cookie options
   const refreshTokenOptions = {
-    expires: new Date(Date.now() + refreshTokenExpire * 1000),
-    maxAge: refreshTokenExpire * 1000,
+    expires: new Date(Date.now() + refreshTokenExpire),
+    maxAge: refreshTokenExpire,
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/", // Make the cookie accessible across the site
   };
-
-  // Store refresh token in Redis or another persistent store for handling token revocation
-  // await redisClient.set(user.id, refreshToken, { EX: refreshTokenExpire });
 
   // Set tokens as cookies
   res.cookie("accessToken", accessToken, accessTokenOptions);
   res.cookie("refreshToken", refreshToken, refreshTokenOptions);
 
-  // Send response with token and user data
+  // Send the response with token and user data
   res.status(statusCode).json({
     success: true,
     user,
