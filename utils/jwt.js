@@ -11,29 +11,22 @@ const sendToken = async (user, statusCode, res) => {
   const refreshTokenExpire = parseInt(process.env.REFRESH_TOKEN_EXPIRE || "59", 10) * 60 * 1000; // Default: 59 minutes
 
   // Access token cookie options
-  const accessTokenOptions = {
-    expires: new Date(Date.now() + accessTokenExpire),
-    maxAge: accessTokenExpire,
-    httpOnly: true, // Prevent JavaScript from accessing this cookie
-    // secure: process.env.NODE_ENV === 'production', // Set to true in production
-    sameSite: 'none', // Allow cross-origin cookies // Only send cookies over HTTPS in production
-    path: "/", // Apply the cookie to the entire site
-  };
-
-  // Refresh token cookie options
-  const refreshTokenOptions = {
-    expires: new Date(Date.now() + refreshTokenExpire),
-    maxAge: refreshTokenExpire,
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true, // Prevent client-side JavaScript access
+    secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+    sameSite: "Lax", // Adjust this to "None" if cross-origin requests are used
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week in milliseconds
+    path: "/", // Ensure the cookie is accessible across your app
+  });
+  
+  res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production', // Set to true in production
-    sameSite: 'none', // Allow cross-origin cookies
-    path: "/", // Make the cookie accessible across the site
-  };
-
-  // Set tokens as cookies
-  res.cookie("accessToken", accessToken, accessTokenOptions);
-  res.cookie("refreshToken", refreshToken, refreshTokenOptions);
-
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Lax",
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+    path: "/",
+  });
+  
   // Send the response with token and user data
   res.status(statusCode).json({
     success: true,
