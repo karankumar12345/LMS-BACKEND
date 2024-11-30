@@ -15,8 +15,8 @@ const sendToken = async (user, statusCode, res) => {
     expires: new Date(Date.now() + accessTokenExpire),
     maxAge: accessTokenExpire,
     httpOnly: true, // Prevent JavaScript from accessing this cookie
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Use "none" for cross-origin in production
-    secure: process.env.NODE_ENV === "production", // Only send cookies over HTTPS in production
+    // secure: process.env.NODE_ENV === 'production', // Set to true in production
+    sameSite: 'none', // Allow cross-origin cookies // Only send cookies over HTTPS in production
     path: "/", // Apply the cookie to the entire site
   };
 
@@ -25,8 +25,8 @@ const sendToken = async (user, statusCode, res) => {
     expires: new Date(Date.now() + refreshTokenExpire),
     maxAge: refreshTokenExpire,
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    // secure: process.env.NODE_ENV === 'production', // Set to true in production
+    sameSite: 'none', // Allow cross-origin cookies
     path: "/", // Make the cookie accessible across the site
   };
 
