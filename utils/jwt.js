@@ -12,19 +12,15 @@ const sendToken = async (user, statusCode, res) => {
 
   // Access token cookie options
   res.cookie("accessToken", accessToken, {
-    httpOnly: true, // Prevent client-side JavaScript access
-    secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-    sameSite: "Lax", // Adjust this to "None" if cross-origin requests are used
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week in milliseconds
-    path: "/", // Ensure the cookie is accessible across your app
+    httpOnly: true,
+    sameSite: "None",
+    secure: true // Ensure the cookie is accessible across your app
   });
   
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Lax",
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
-    path: "/",
+    sameSite: "None",
+    secure: true
   });
   
   // Send the response with token and user data
