@@ -237,25 +237,22 @@ This document serves as an exhaustive guide to the backend API of our applicatio
   "password": "securePassword123"
 }
 Login Request:
-
-JSON
-
 {
   "email": "[email address removed]",
   "password": "securePassword123"
 }
+
 Login Response:
 
-JSON
 
 {
   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
+
+
 6.2. Course Creation and Update Examples
 Course Creation Request:
-
-JSON
 
 {
   "name": "Advanced JavaScript",
@@ -290,18 +287,14 @@ JSON
     }
   ]
 }
+
+
 Course Update Request:
-
-JSON
-
 {
   "description": "Updated course description."
 }
 6.3. Interview Experience Submission and Retrieval Examples
 Interview Experience Submission Request:
-
-JSON
-
 {
   "companyName": "Innovate Inc.",
   "jobPosition": "Software Engineer",
@@ -327,9 +320,8 @@ JSON
     }
   ]
 }
-Interview Experience Retrieval Response:
 
-JSON
+Interview Experience Retrieval Response:
 
 {
   "_id": "63c0d3e4f5a6b7c8d9e0",
@@ -341,10 +333,9 @@ JSON
     // ... rounds data ...
   ]
 }
+
 6.4. Article Creation and Content Examples
 Article Creation Request:
-
-JSON
 
 {
   "title": "Understanding Modern JavaScript",
@@ -376,64 +367,74 @@ JSON
 6.5. Question and Review Interaction Examples
 Add Question Request:
 
-JSON
-
 {
   "courseId": "61a0b0c1d2e3f4a5b6c7d9e",
   "question": "What is the difference between let and const?"
 }
-Add Review Request:
 
-JSON
+
+
+Add Review Request:
 
 {
   "courseId": "61a0b0c1d2e3f4a5b6c7d9e",
   "rating": 5,
   "comment": "Excellent course!"
 }
+
 7. Environment Variables: Configuration
+
 7.1. Database Connection Strings
+
 MONGODB_URI: Connection string for the MongoDB database.
+
 7.2. JWT Secret Keys
+
 ACCESS_TOKEN_SECRET: Secret key for signing access tokens.
 REFRESH_TOKEN_SECRET: Secret key for signing refresh tokens.
+
 7.3. Cloud Storage Credentials
+
 CLOUD_NAME: Cloudinary cloud name.
 CLOUD_API_KEY: Cloudinary API key.
 CLOUD_API_SECRET: Cloudinary API secret.
+
 7.4. Detailed Explanation of Each Variable
+
 These variables are crucial for the application's functionality and security.
 They should be stored securely and not exposed in the code.
 Use environment-specific configuration files for different environments (development, production).
+
+
+
 8. Installation and Setup
 8.1. Prerequisites (Node.js, MongoDB, etc.)
 Node.js (v14 or higher)
 MongoDB (v4.4 or higher)
 npm or yarn
-8.2. Cloning the Repository
-Bash
 
-git clone [https://github.com/your-repo.git](https://github.com/your-repo.git)
-cd your-repo
+
+8.2. Cloning the Repository
+
+git clone [https://github.com/your-repo.git](https://github.com/karankumar12345/LMS-BACKEND)
+cd LMS-BACKEND
 8.3. Installing Dependencies
-Bash
 
 npm install
 # or
 yarn install
-*
+
+
 ### 8.4. Configuring Environment Variables
 
 * Create a `.env` file in the root directory.
 * Add the required environment variables:
-
 MONGODB_URI=mongodb://localhost:27017/your-database
 ACCESS_TOKEN_SECRET=your-access-token-secret
 REFRESH_TOKEN_SECRET=your-refresh-token-secret
 CLOUD_NAME=your-cloud-name
 CLOUD_API_KEY=your-cloud-api-key
 CLOUD_API_SECRET=your-cloud-api-secret
-
 
 * Replace the placeholder values with your actual values.
 
@@ -443,8 +444,10 @@ CLOUD_API_SECRET=your-cloud-api-secret
 npm run dev # For development
 # or
 npm start # For production
+
 The application will start on the specified port (usually 3000).
 8.6. Database Setup and Migration
+
 Ensure MongoDB is running.
 The application will automatically create the required collections.
 For migrations, you can use tools like mongoose-migrate.
@@ -452,22 +455,26 @@ For migrations, you can use tools like mongoose-migrate.
 9.1. Making API Requests with cURL or Postman
 Example cURL Request (Login):
 
-Bash
 
 curl -X POST -H "Content-Type: application/json" -d '{
   "email": "[email address removed]",
   "password": "securePassword123"
 }' http://localhost:3000/login
+
+
+
+
 Example Postman Request:
 
 Set the request type (POST, GET, PUT, DELETE).
 Enter the URL (e.g., http://localhost:3000/register).
 Set the headers (e.g., Content-Type: application/json).
 Enter the request body (JSON).
+
+
+
 9.2. Code Examples (Node.js, Python) for API Interaction
 Node.js Example (using axios):
-
-JavaScript
 
 const axios = require('axios');
 
@@ -486,29 +493,9 @@ async function loginUser(email, password) {
 }
 
 loginUser('[email address removed]', 'securePassword123');
-Python Example (using requests):
 
-Python
 
-import requests
-import json
 
-def login_user(email, password):
-    url = 'http://localhost:3000/login'
-    data = {'email': email, 'password': password}
-    headers = {'Content-Type': 'application/json'}
-    try:
-        response = requests.post(url, data=json.dumps(data), headers=headers)
-        response.raise_for_status()
-        print(response.json())
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        if response is not None:
-            print(response.json())
-        return None
-
-login_user('[email address removed]', 'securePassword123')
 9.3. Best Practices for API Integration
 Handle errors gracefully.
 Use environment variables for configuration.
